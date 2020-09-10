@@ -1,0 +1,5 @@
+npx create-react-app weather-app //Crea proyecto
+
+- npm i react-router-dom
+- npm i react-bootstrap bootstrap (se agrega mas archivos)
+
