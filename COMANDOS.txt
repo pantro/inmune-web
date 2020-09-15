@@ -2,4 +2,6 @@ npx create-react-app weather-app //Crea proyecto
 
 - npm i react-router-dom
 - npm i react-bootstrap bootstrap (se agrega mas archivos)
-
+- npm install primereact --save
+- npm install primeicons --save //fechas
+- npm install react-hook-form //Validar

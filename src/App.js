@@ -2,13 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
 
-import Header from "./components/header/Header.jsx";
+import Header from "./layouts/Header.jsx";
+import Main from "./layouts/Main.jsx";
 
 function App() {
   return (
     <Router>
       <>
         <Header/>
+        <Main/>
         {/*<Switch>
           <Route
             exact path="/" render={ () => <MyMap/>}

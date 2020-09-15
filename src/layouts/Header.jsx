@@ -14,16 +14,14 @@ const Header = () => {
 			  <img src="./logo-gerencia-aqp.png" alt="logo gerencia aqp"/>
 			</figure>
 		  </section>
-		  <section></section>
-		  
-		  <Navbar.Collapse>
-		    <Nav>
-	        	<Link to="/solicitarayuda">Inicio</Link>
-	        	<Link to="/ayudar">Reportar chirimacha</Link>
-		      <Link to="#pricing">Conoce más sobre las chirimachas</Link>
-		      <Link to="#features">Agentes comunitarios virtuales</Link>
+		  <section>
+		  	<Nav>
+	          <Link to="#">Inicio</Link>
+	          <Link to="#">Reportar chirimacha</Link>
+		      <Link to="#">Conoce más sobre las chirimachas</Link>
+		      <Link to="#">Agentes comunitarios virtuales</Link>
 		    </Nav>
-		  </Navbar.Collapse>
+		  </section>
 		</header>
 	)
 }
