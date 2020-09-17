@@ -4,7 +4,9 @@ import FormReport from "../components/FormReport";
 
 const Main = () => {
     return (
-        <FormReport/>
+        <main>
+            <FormReport/>
+        </main>
     );
 }
 

@@ -6,7 +6,7 @@ import 'primereact/resources/primereact.min.css';//Fecha
 import 'primeicons/primeicons.css';//Fecha
 import { useForm } from "react-hook-form";//Validar
 
-//import { es, DateFull, initInspection, PutNA } from "../../../resources";
+import { es, provincias_aqp, distritos_aqp, DateFull } from "../resources";
 
 //Formulario de denuncia
 const FormReport = (props) => {
@@ -14,7 +14,7 @@ const FormReport = (props) => {
     //validacion
     const { register, handleSubmit, errors } = useForm();
     
-    //State para inspecciones
+    //State para reportes
     const [currentReport, setCurrentReport] = useState( [] );
         
     //Extraer de valores de inspeccion
@@ -23,8 +23,15 @@ const FormReport = (props) => {
         rep_celular1,
         rep_otro_celular,
         rep_celular2,
+        //rep_provincia,
+        //rep_distrito,
+        rep_localidad,
+        rep_direccion,
+        rep_mas_preguntas,
+        rep_fecha_encontro_chiri
     } = currentReport;
-        
+    let rep_provincia = [];
+    let rep_distrito = [];
     const OnChange = e => {
         setCurrentReport({
             ...currentReport,
@@ -107,7 +114,117 @@ const FormReport = (props) => {
                     </Form.Group>
                 </>):null
             }
-            <Button type='submit'>Guardar</Button> 
+            {/* REP_PROVINCIA */}
+            <Form.Group controlId="rep_provincia">
+                <Form.Label >Provincia</Form.Label>
+                <Form.Control 
+                    as="select"
+                    name= 'rep_provincia'
+                    value= {rep_provincia}
+                    onChange= {OnChange}
+                >
+                    <option>Seleccione Provincia</option>
+                    {provincias_aqp.map((e, key) => {
+                        return <option key={key} value={e.provinciaId}>{e.provinciaName}</option>;
+                    })} 
+                </Form.Control>
+            </Form.Group> 
+            {/* REP_DISTRITO */}
+            <Form.Group controlId="rep_distrito">
+                <Form.Label >Distrito</Form.Label>
+                <Form.Control 
+                    as="select"
+                    name= 'rep_distrito'
+                    value= {rep_distrito}
+                    onChange= {OnChange}
+                >
+                    <option>Seleccione Distrito</option>
+                    {distritos_aqp[rep_provincia].map((e, key) => {
+                        return <option key={key} value={e.distritoId}>{e.distritoName}</option>;
+                    })} 
+                </Form.Control>
+            </Form.Group> 
+            {/* REP_LOCALIDAD */}
+            <Form.Group controlId="rep_localidad">
+                <Form.Label >Localidad</Form.Label>
+                <Form.Control 
+                    type='text'
+                    name='rep_localidad'
+                    defaultValue={rep_localidad}
+                    onChange={OnChange}
+                />
+            </Form.Group>
+            {/* REP_DIRECCION */}
+            <Form.Group controlId="rep_direccion">
+                <Form.Label >Dirección</Form.Label>
+                <Form.Control 
+                    type='text'
+                    name='rep_direccion'
+                    defaultValue={rep_direccion}
+                    onChange={OnChange}
+                />
+            </Form.Group>
+            {/* REP_MAS_PREGUNTAS */}
+            <Form.Group controlId="rep_mas_preguntas">
+                <Form.Label>Si dispone de 2 minutos, agradeceríamos que nos ayude con unas cortas preguntas más. Si su respuesta es SI seleccione el marcador caso contrario haga clic en ENVIAR REPORTE.</Form.Label>
+                <Form.Check
+                    type="checkbox"
+                    name='rep_mas_preguntas'
+                    checked={ rep_mas_preguntas }
+                    onChange={OnChangeCheck}
+                />
+            </Form.Group>
+            {rep_mas_preguntas? 
+                (<>
+                    {/* REP_VISTE_CHIRI */}
+                    <Form.Group>
+                        <Form.Label>Viste la chirimacha?</Form.Label>
+                        <Col sm={10}> 
+                            <Form.Check
+                                type="radio"
+                                name="rep_viste_chiri"
+                                label="Sí, la vi y la capturé"
+                                value="vi_capture"
+                                id="vi_capture"
+                                onChange= {OnChange}
+                                ref={register({ required: true })}
+                            />
+                            <Form.Check
+                                type="radio"
+                                label="Si, la vi pero no la capturé."
+                                name="rep_viste_chiri"
+                                value="vi_no_capture"
+                                id="vi_no_capture"
+                                onChange= {OnChange}
+                                ref={register({ required: true })}
+                            />
+                            <Form.Check
+                                type="radio"
+                                name="rep_viste_chiri"
+                                label="No la vi, pero reconocí sus rastros (heces o huevos)."
+                                value="no_vi_reconoci_rastros"
+                                id="no_vi_reconoci_rastros"
+                                onChange= {OnChange}
+                                ref={register({ required: true })}
+                            />
+                        </Col>
+                        {errors.rep_viste_chiri && <span className='alert-custom'>*Campo obligatorio</span>}
+                    </Form.Group>
+                    {/* REP_FECHA_ENCONTRO_CHIRI */}
+                    <Form.Group controlId="rep_fecha_encontro_chiri">
+                        <Form.Label>¿Cuándo encontraste la chirimacha o te diste cuenta de que estaba en ese lugar?</Form.Label>
+                        <Calendar 
+                            showIcon={true} 
+                            locale={es} 
+                            dateFormat="yy-mm-dd" 
+                            name = 'rep_fecha_encontro_chiri'
+                            value={new Date(rep_fecha_encontro_chiri)} 
+                            onChange={OnChange}
+                        />
+                    </Form.Group>
+                </>):null
+            }
+            <Button type='submit'>Enviar reporte</Button> 
         </Form>
       </>
     );
