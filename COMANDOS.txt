@@ -5,3 +5,6 @@ npx create-react-app weather-app //Crea proyecto
 - npm install primereact --save
 - npm install primeicons --save //fechas
 - npm install react-hook-form //Validar
+- npm install --save leaflet
+- npm install --save leaflet.markercluster
+- npm install --save leaflet.locatecontrol

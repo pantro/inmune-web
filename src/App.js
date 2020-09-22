@@ -5,13 +5,16 @@ import './App.css';
 
 import Header from "./layouts/Header.jsx";
 import Main from "./layouts/Main.jsx";
+import PositionState from "./context/position/PositionState";
 
 function App() {
   return (
     <Router>
       <Container>
         <Header/>
-        <Main/>
+        <PositionState>
+          <Main/>
+        </PositionState>
         {/*<Switch>
           <Route
             exact path="/" render={ () => <MyMap/>}

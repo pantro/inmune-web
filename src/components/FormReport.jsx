@@ -6,6 +6,8 @@ import 'primereact/resources/primereact.min.css';//Fecha
 import 'primeicons/primeicons.css';//Fecha
 import { useForm } from "react-hook-form";//Validar
 
+import MyMap from "./MyMap";
+import PositionContext from "../context/position/PositionContext";
 import { es, provincias_aqp, distritos_aqp, DateFull } from "../resources";
 
 //Formulario de denuncia
@@ -14,9 +16,13 @@ const FormReport = (props) => {
     //validacion
     const { register, handleSubmit, errors } = useForm();
     
+    //Obtener la posicion
+    const PositionsContext = useContext(PositionContext);
+    const { currentPosition, UpdatePosition } = PositionsContext;
+    
     //State para reportes
     const [currentReport, setCurrentReport] = useState( [] );
-        
+    
     //Extraer de valores de inspeccion
     const {
         rep_nombre,
@@ -32,6 +38,14 @@ const FormReport = (props) => {
     } = currentReport;
     let rep_provincia = [];
     let rep_distrito = [];
+
+    //Visualizar el mapa
+    const ViewMap = () => {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            UpdatePosition([position.coords.latitude,position.coords.longitude]);
+        });
+    }
+
     const OnChange = e => {
         setCurrentReport({
             ...currentReport,
@@ -115,7 +129,7 @@ const FormReport = (props) => {
                 </>):null
             }
             {/* REP_PROVINCIA */}
-            <Form.Group controlId="rep_provincia">
+            {/*<Form.Group controlId="rep_provincia">
                 <Form.Label >Provincia</Form.Label>
                 <Form.Control 
                     as="select"
@@ -130,7 +144,7 @@ const FormReport = (props) => {
                 </Form.Control>
             </Form.Group> 
             {/* REP_DISTRITO */}
-            <Form.Group controlId="rep_distrito">
+            {/*<Form.Group controlId="rep_distrito">
                 <Form.Label >Distrito</Form.Label>
                 <Form.Control 
                     as="select"
@@ -163,6 +177,13 @@ const FormReport = (props) => {
                     defaultValue={rep_direccion}
                     onChange={OnChange}
                 />
+            </Form.Group>
+            {/* REP_UBICACION */}
+            {console.log(currentPosition)}
+            <Form.Group controlId="rep_ubicacion">
+                <Form.Label >Ubicacion</Form.Label>
+                <Button onClick={ViewMap}>Ver mapa</Button>
+                <MyMap/>
             </Form.Group>
             {/* REP_MAS_PREGUNTAS */}
             <Form.Group controlId="rep_mas_preguntas">
